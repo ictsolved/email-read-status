@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Email {
+  id         Int              @id @default(autoincrement())
+  subject    String
+  createdAt  DateTime         @default(now())
+  token      String           @unique
+  receipts   Receipt[]        @relation("EmailReceipts")
+  recipients EmailRecipient[] @relation("Recipients")
+}
+
+model Receipt {
+  id         Int      @id @default(autoincrement())
+  emailId    Int
+  email      Email    @relation("EmailReceipts", fields: [emailId], references: [id])
+  readAt     DateTime
+  userAgent  String
+  ipAddress  String
+  readBySelf Boolean  @default(false)
+}
+
+model EmailAddress {
+  id         Int              @id @default(autoincrement())
+  email      String           @unique
+  recipients EmailRecipient[]
+}
+
+model EmailRecipient {
+  id             Int          @id @default(autoincrement())
+  emailId        Int
+  email          Email        @relation("Recipients", fields: [emailId], references: [id])
+  emailAddressId Int
+  emailAddress   EmailAddress @relation(fields: [emailAddressId], references: [id])
+  type           String
+}
