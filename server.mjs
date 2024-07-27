@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.static("./public"));
 app.use("/", router);
 
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   res.status(err.status || 500).json({ error: "Something Went Wrong" });
 });
 

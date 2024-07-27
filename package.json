@@ -2,6 +2,7 @@
   "name": "email-read-status",
   "version": "1.0.0",
   "description": "Track if email has been opened",
+  "license": "MIT",
   "type": "module",
   "exports": "./server.mjs",
   "scripts": {
