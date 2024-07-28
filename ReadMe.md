@@ -1,44 +1,44 @@
-# Email Read Status
+# 📧 **Email Read Status**
 
-**Email Read Status** is a Node.js application designed for tracking the read status of emails. The application utilizes Prisma for database management and SQLite for storage. It allows users to insert email records for tracking, track read receipts, and also let user to mark self-opened emails.
+Welcome to **Email Read Status**! 🚀 This Node.js application is designed to efficiently track the read status of your emails. Utilizing Prisma for database management and SQLite for storage, this app lets you track, manage, and interact with email records effortlessly.
 
-## Features
+## 🛠️ **Features**
 
-1. **Insert Email Record**: Add new email records for tracking along with a unique tracking code.
-2. **View List of Emails**: Retrieve and display a list of all tracked emails.
-3. **View Read Receipts**: Check the read status and receipts of specific emails.
-4. **Mark Emails as Self-opened**: Update the read status as self-opened.
+- **Add New Email Records**: Insert and track emails with a unique tracking code. 📧
+- **View All Emails**: Retrieve and display a list of all tracked emails. 📜
+- **Track Read Receipts**: Check read status and receipts for specific emails. 👁️
+- **Mark Self-opened Emails**: Update read status for emails opened by yourself. 🖥️
+- **List Emails by Address**: Retrieve emails associated with a specific email address. 📋
+- **Latest Receipts**: See the last 10 read receipts (useful in frontend for notification). 🔔
+- **Email Address Search**: Search for stored email addresses (useful for autocomplete suggestions in frontend). 🔍
 
-## TODOs
+## 📋 **Prerequisites**
 
-- **Email Address Suggestions in Frontend**: Implement a feature to search for stored email address to show auto-completion suggestion in frontend.
-- **Get List of Emails by Email Address**: Create functionality to retrieve a list of emails associated with a specific email address.
+Ensure you have the following installed before getting started:
 
-## Prerequisites
+- [Node.js](https://nodejs.org/) (version 14 or higher) 🟢
+- [Yarn](https://yarnpkg.com/) (Yarn package manager) 🧶
 
-Before you begin, ensure you have met the following requirements:
+## 🏗️ **Installation**
 
-- [Node.js](https://nodejs.org/) (version 14 or higher)
-- [yarn](https://yarnpkg.com/) (Yarn package manager)
+Follow these steps to set up your environment:
 
-## Installation
-
-1. **Clone the Repository**
+1. **Clone the Repository**:
 
    ```bash
    git clone https://github.com/ictsolved/email-read-status.git
    cd email-read-status
    ```
 
-2. **Install Dependencies**
+2. **Install Dependencies**:
 
-   Install the necessary packages using yarn:
+   Install necessary packages using Yarn:
 
    ```bash
    yarn
    ```
 
-3. **Set Up Prisma**
+3. **Set Up Prisma**:
 
    Initialize Prisma and set up the SQLite database:
 
@@ -47,9 +47,9 @@ Before you begin, ensure you have met the following requirements:
    npx prisma migrate dev
    ```
 
-4. **Configure Environment Variables**
+4. **Configure Environment Variables**:
 
-   Create a `.env` file in the root directory and configure the database URL:
+   Create a `.env` file in the root directory and configure the following settings:
 
    ```env
    PORT=3000
@@ -58,30 +58,36 @@ Before you begin, ensure you have met the following requirements:
    IMAGE_NAME=image.gif
    ```
 
-## Usage
+## 🚀 **Usage**
 
-1. **Start the Application**
+1. **Start the Application**:
 
-   Run the application using:
+   Run the application with:
 
    ```bash
    yarn start
    ```
 
-   The application will start and listen for incoming requests.
+   Your application will start and listen for incoming requests on the specified port. 🎉
 
-2. **Database Migrations**
+2. **Database Migrations**:
 
-   For any database schema changes, use Prisma to apply migrations:
+   To apply any changes to the database schema, use Prisma to run migrations:
 
    ```bash
    npx prisma migrate dev --name migration-name
    ```
 
-## Contributing
+## 🤝 **Contributing**
 
-Contributions are welcome! Please fork the repository and submit a pull request with your proposed changes. Ensure that your code follows the project's coding style and includes tests for new features.
+We welcome contributions! 🎉 To contribute:
 
-## License
+1. **Fork the Repository**: Create your own fork of the repository.
+2. **Create a Branch**: Make changes in a separate branch.
+3. **Submit a Pull Request**: Open a pull request with your proposed changes.
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+Please ensure that your code adheres to the project's coding style and includes tests for new features. 🧪
+
+## 📜 **License**
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details. 📄
