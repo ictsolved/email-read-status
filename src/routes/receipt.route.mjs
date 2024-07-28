@@ -1,13 +1,13 @@
 import { Router } from "express";
 
 import controller from "../controllers/receipt.controller.mjs";
-import IdValidator from "../validators/id.validator.mjs";
 import validator from "../validators/receipt.validator.mjs";
 
 const router = Router();
 
 router
-  .get("/receipts/:id", IdValidator.id, controller.getReceipts)
+  .get("/latest-receipts", controller.latestReceipts)
+  .get("/email-receipts/:emailId", validator.emailId, controller.emailReceipts)
   .put("/receipts", validator.markAsSelfRead, controller.markAsSelfRead)
   .get("/receipt/:token", controller.trackReceipt);
 

@@ -2,17 +2,66 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-async function getReceiptStatus(emailId) {
+async function emailReceipts(emailId) {
   try {
     const receipts = await prisma.receipt.findMany({
-      where: { emailId },
       orderBy: { readAt: "desc" },
+      where: { emailId },
     });
-
     return receipts;
   } catch (error) {
-    console.error("Error retrieving receipts from database:", error);
-    throw new Error("Failed to retrieve receipts");
+    console.error("Error retrieving email receipts from database:", error);
+    throw new Error("Failed to retrieve email receipts");
+  }
+}
+
+async function latestReceipts() {
+  try {
+    const queryOptions = {
+      orderBy: { readAt: "desc" },
+      where: { readBySelf: false },
+      take: 10,
+      include: {
+        email: {
+          select: {
+            id: true,
+            subject: true,
+            recipients: {
+              select: {
+                type: true,
+                emailAddress: {
+                  select: {
+                    id: true,
+                    email: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+
+    const receipts = await prisma.receipt.findMany(queryOptions);
+
+    return receipts.map((receipt) => ({
+      id: receipt.id,
+      readAt: receipt.readAt,
+      userAgent: receipt.userAgent,
+      ipAddress: receipt.ipAddress,
+      email: {
+        id: receipt.email.id,
+        subject: receipt.email.subject,
+        recipients: receipt.email.recipients.map((recipient) => ({
+          id: recipient.emailAddress.id,
+          email: recipient.emailAddress.email,
+          type: recipient.type,
+        })),
+      },
+    }));
+  } catch (error) {
+    console.error("Error retrieving latest receipts from database:", error);
+    throw new Error("Failed to retrieve latest receipts");
   }
 }
 
@@ -61,4 +110,9 @@ async function markAsSelfRead(data) {
   }
 }
 
-export default { trackReceipt, getReceiptStatus, markAsSelfRead };
+export default {
+  trackReceipt,
+  emailReceipts,
+  latestReceipts,
+  markAsSelfRead,
+};

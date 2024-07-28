@@ -2,8 +2,19 @@ import service from "../services/email.service.mjs";
 
 async function getEmails(req, res) {
   try {
-    const emails = await service.getEmails();
+    const emails = await service.getEmails(req.query);
     res.send(emails);
+  } catch (error) {
+    console.error("Error retrieving emails:", error);
+    res.status(500).send({ error: "Internal Server Error" });
+  }
+}
+
+async function searchEmailAddress(req, res) {
+  try {
+    const query = req.query.q;
+    const emailAddresses = await service.searchEmailAddress(query);
+    res.send(emailAddresses);
   } catch (error) {
     console.error("Error retrieving emails:", error);
     res.status(500).send({ error: "Internal Server Error" });
@@ -26,4 +37,4 @@ async function createEmail(req, res) {
   }
 }
 
-export default { getEmails, createEmail };
+export default { getEmails, createEmail, searchEmailAddress };

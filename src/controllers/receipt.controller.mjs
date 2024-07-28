@@ -2,11 +2,26 @@ import path from "path";
 
 import service from "../services/receipt.service.mjs";
 
-async function getReceipts(req, res) {
+async function latestReceipts(req, res) {
   try {
-    const { id } = req.params;
+    const receipt = await service.latestReceipts();
 
-    const receipt = await service.getReceiptStatus(id);
+    if (!receipt || receipt.length == 0) {
+      return res.status(404).json({ error: "Receipt not found" });
+    }
+
+    res.status(200).json(receipt);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Failed to retrieve latest receipts" });
+  }
+}
+
+async function emailReceipts(req, res) {
+  try {
+    const { emailId } = req.params;
+
+    const receipt = await service.emailReceipts(emailId);
 
     if (!receipt || receipt.length == 0) {
       return res.status(404).json({ error: "Receipt not found" });
@@ -43,4 +58,4 @@ async function trackReceipt(req, res) {
   }
 }
 
-export default { getReceipts, markAsSelfRead, trackReceipt };
+export default { latestReceipts, emailReceipts, markAsSelfRead, trackReceipt };
